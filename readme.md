@@ -23,7 +23,6 @@ sudo apt-get install libcurl4-openssl-dev
 4. Compile the program:        
 ```bash 
 gcc -o phishkiller main.c -lcurl -lpthread
-
 ```
 
 5. Run the program:
@@ -37,7 +36,15 @@ Enter the URL of the target you want to flood:
 
 Enter the URL and press Enter. The program will start sending HTTP POST requests to the specified URL using multiple threads.
 
----
+[Good source for finding phishing websites](https://openphish.com/)
 
+Example response:
+```bash
+2024-07-11 18:11:19 - Status Code: 200
+2024-07-11 18:11:19 - Status Code: 200
+2024-07-11 18:11:19 - Status Code: 200
+2024-07-11 18:11:19 - Status Code: 500
+```
+---
 **Note**: This tool should be used responsibly and only for educational purposes or with permission from the target server. Unauthorized use of such tools can be illegal and unethical.
 

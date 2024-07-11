@@ -14,7 +14,6 @@ typedef struct {
     int weight;
 } WeightedEmailDomain;
 
-// Define the weighted email domains here
 WeightedEmailDomain weighted_email_domains[] = {
     {"@example.com", 50},
     {"@sample.com", 30},
@@ -43,13 +42,13 @@ void name_gen(char *name) {
 
     int name_system = rand() % 3;
     switch (name_system) {
-        case 0: // FullName
+        case 0:
             sprintf(name, "%s%s", first_name, last_name);
             break;
-        case 1: // FullFirstFirstInitial
+        case 1:
             sprintf(name, "%s%c", first_name, last_name[0]);
             break;
-        case 2: // FirstInitialFullLast
+        case 2:
             sprintf(name, "%c%s", first_name[0], last_name);
             break;
     }
@@ -86,7 +85,7 @@ void generate_random_email(char *email) {
 
 void generate_random_password(char *password) {
     const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-    int length = rand() % 9 + 12; // Random length between 12 and 20
+    int length = rand() % 9 + 12;
     generate_random_string(password, length, charset);
 }
 
@@ -113,14 +112,29 @@ void *send_posts(void *url) {
             curl_easy_setopt(curl, CURLOPT_URL, (char *)url);
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data);
             curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+            curl_easy_setopt(curl, CURLOPT_NOBODY, 1L); // Only fetch the header
 
             res = curl_easy_perform(curl);
             if(res != CURLE_OK) {
                 fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-                sleep(rand() % 5 + 1);
+            } else {
+                long response_code;
+                curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+                
+                // Get current time
+                time_t rawtime;
+                struct tm * timeinfo;
+                char buffer[80];
+
+                time(&rawtime);
+                timeinfo = localtime(&rawtime);
+
+                strftime(buffer, 80, "%Y-%m-%d %H:%M:%S", timeinfo);
+                printf("%s - Status Code: %ld\n", buffer, response_code);
             }
 
             curl_slist_free_all(headers);
+            sleep(rand() % 5 + 1);
         }
         curl_easy_cleanup(curl);
     }
@@ -151,4 +165,3 @@ int main() {
     curl_global_cleanup();
     return 0;
 }
-
