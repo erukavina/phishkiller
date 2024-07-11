@@ -40,7 +40,4 @@ Enter the URL and press Enter. The program will start sending HTTP POST requests
 ---
 
 **Note**: This tool should be used responsibly and only for educational purposes or with permission from the target server. Unauthorized use of such tools can be illegal and unethical.
-~
-~
-~
 
