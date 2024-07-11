@@ -1,6 +1,6 @@
 # Phishkiller
 
-A C remake for [Phyton Phishkiller by CybrZone](https://github.com/CybrZone/phishkiller/)                        
+A C remake for [Python Phishkiller by CybrZone](https://github.com/CybrZone/phishkiller/)                        
 
 ## Usage
 1. Clone the git repo:
